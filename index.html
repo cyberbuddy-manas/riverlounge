@@ -4436,7 +4436,7 @@
         </header> -->
 
         <a id="edgtf-back-to-top" href="#">
-          <script src="https://elfsightcdn.com/platform.js" async></script>
+          <script src="./wa-elfsight.js"></script>
           <div
             class="elfsight-app-51bb44f2-c348-4ea1-8643-5d330575f44d"
             data-elfsight-app-lazy
@@ -7745,15 +7745,40 @@
       }
     </script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const elements = document.querySelectorAll("body *");
+      (() => {
+        const hide = () => {
+          // text fallback: remove any node that literally contains that label
+          document.querySelectorAll("a").forEach((el) => {
+            const t = (el.textContent || "").trim().toLowerCase();
+            if (t === "free google reviews widget") {
+              el.style.setProperty("display", "none", "important");
+            }
+          });
+        };
 
-        elements.forEach((el) => {
-          if (el.textContent.includes("Free Google Reviews Widget")) {
-            el.style.display = "none";
-          }
+        hide();
+
+        const hide2 = () => {
+          // text fallback: remove any node that literally contains that label
+          document.querySelectorAll("a").forEach((el) => {
+            const t = (el.textContent || "").trim().toLowerCase();
+            if (t === " Free Instagram Feed Widget ") {
+              el.style.setProperty("display", "none", "important");
+            }
+          });
+        };
+
+        hide2();
+
+        const obs = new MutationObserver(hide);
+        obs.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
         });
-      });
+
+        window.addEventListener("load", hide);
+        document.addEventListener("DOMContentLoaded", hide);
+      })();
     </script>
   </body>
 </html>
