@@ -6689,6 +6689,72 @@
                     </div>
                   </div>
                 </div>
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    const todayIndex = new Date().getDay(); // 0 = Sunday, 1 = Monday ...
+                    const daysMap = {
+                      0: "Sonntag",
+                      1: "Montag",
+                      2: "Dienstag",
+                      3: "Mittwoch",
+                      4: "Donnerstag",
+                      5: "Freitag",
+                      6: "Samstag"
+                    };
+
+                    const todayName = daysMap[todayIndex];
+
+                    document.querySelectorAll(".edgtf-opening-hours-widget").forEach(widget => {
+                      const dayEl = widget.querySelector(".edgtf-opening-hours-day");
+                      const timeEl = widget.querySelector(".edgtf-opening-hours-time");
+
+                      if (!dayEl || !timeEl) return;
+
+                      const dayText = dayEl.textContent.trim();
+
+                      let isToday = false;
+
+                      // Case 1: Range (e.g. Montag - Donnerstag)
+                      if (dayText.includes("-")) {
+                        const [start, end] = dayText.split("-").map(d => d.trim());
+
+                        const order = [
+                          "Montag",
+                          "Dienstag",
+                          "Mittwoch",
+                          "Donnerstag",
+                          "Freitag",
+                          "Samstag",
+                          "Sonntag"
+                        ];
+
+                        const startIndex = order.indexOf(start);
+                        const endIndex = order.indexOf(end);
+                        const todayOrderIndex = order.indexOf(todayName);
+
+                        if (
+                          startIndex !== -1 &&
+                          endIndex !== -1 &&
+                          todayOrderIndex >= startIndex &&
+                          todayOrderIndex <= endIndex
+                        ) {
+                          isToday = true;
+                        }
+                      }
+                      // Case 2: Single day
+                      else if (dayText === todayName) {
+                        isToday = true;
+                      }
+
+                      // Highlight
+                      if (isToday) {
+                        timeEl.style.fontWeight = "700";
+                        timeEl.style.color = "#f5c16c"; // highlight color
+                        dayEl.style.fontWeight = "600";
+                      }
+                    });
+                  });
+                </script>
                 <style>
                   @media screen and (max-width: 600px) {
                     #helloworld {
