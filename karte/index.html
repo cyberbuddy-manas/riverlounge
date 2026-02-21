@@ -4669,6 +4669,7 @@
                                         ><a
                                           itemprop="url"
                                           href="#drinksmenu"
+                                          id="scrollAndOpenMenu"
                                           style="text-transform: uppercase"
                                           class="edgtf-btn edgtf-btn-medium edgtf-btn-solid edgtf-btn-orange-white"
                                         >
@@ -4784,7 +4785,8 @@
                                             #PLACE2BE
                                           </var>
                                           <h2 class="edgtf-st-title">
-                                            Drinks mit Charakter. Hookah with Flavor. Vibes that last<span
+                                            Drinks mit Charakter. Hookah with
+                                            Flavor. Vibes that last<span
                                               class="edgtf-st-title-dot"
                                               >!</span
                                             >
@@ -4797,7 +4799,7 @@
                                             "
                                           >
                                             River Lounge steht für besondere
-                                            Drinks, fein abgestimmte Shisha und
+                                            Drinks, fein abgestimmte Hookah und
                                             ein Ambiente, das man fühlt.
                                             Gedimmtes Licht, entspannte Beats
                                             und ein Raum, der dich den Alltag
@@ -5343,7 +5345,7 @@
                                         >Our Finest</var
                                       >
                                       <h2 class="edgtf-st-title">
-                                        Bestseller Selection<span
+                                        Bestseller Drinks<span
                                           class="edgtf-st-title-dot"
                                           >.</span
                                         >
@@ -5678,7 +5680,7 @@
                                                       itemprop="name"
                                                       class="offbeat-pli-title entry-title"
                                                     >
-                                                      Shisha
+                                                      Hookah
                                                     </h4>
                                                     <div
                                                       class="offbeat-pli-dots"
@@ -6082,22 +6084,53 @@
                                       <div class="vc_column-inner">
                                         <style>
                                           .menu-modal {
-                                            display: none;
                                             position: fixed;
                                             z-index: 9999;
                                             inset: 0;
                                             background: rgba(0, 0, 0, 0.8);
+
+                                            /* animation setup */
+                                            opacity: 0;
+                                            visibility: hidden;
+                                            pointer-events: none;
+                                            transition:
+                                              opacity 260ms ease,
+                                              visibility 260ms ease;
+                                            display: flex;
+                                            align-items: flex-start;
+                                            justify-content: center;
+                                            padding: 5vh 16px; /* keeps your 5% top feeling */
+                                          }
+
+                                          .menu-modal.open {
+                                            opacity: 1;
+                                            visibility: visible;
+                                            pointer-events: auto;
                                           }
 
                                           .menu-modal-content {
                                             background: #111;
                                             max-width: 900px;
-                                            margin: 5% auto;
+                                            width: 100%;
                                             padding: 20px;
                                             border-radius: 12px;
                                             position: relative;
                                             max-height: 90vh;
                                             overflow-y: auto;
+
+                                            /* animation setup */
+                                            transform: translateY(12px)
+                                              scale(0.98);
+                                            opacity: 0;
+                                            transition:
+                                              transform 260ms ease,
+                                              opacity 260ms ease;
+                                            will-change: transform, opacity;
+                                          }
+
+                                          .menu-modal.open .menu-modal-content {
+                                            transform: translateY(0) scale(1);
+                                            opacity: 1;
                                           }
 
                                           .menu-modal-content h3 {
@@ -6158,6 +6191,14 @@
                                             color: #fff;
                                             cursor: pointer;
                                           }
+
+                                          /* optional: respects reduced motion */
+                                          @media (prefers-reduced-motion: reduce) {
+                                            .menu-modal,
+                                            .menu-modal-content {
+                                              transition: none;
+                                            }
+                                          }
                                         </style>
 
                                         <div class="wpb_wrapper">
@@ -6201,6 +6242,10 @@
                                             document.getElementById(
                                               "openMenuModal",
                                             );
+                                          const scrollAndOpenBtn =
+                                            document.getElementById(
+                                              "scrollAndOpenMenu",
+                                            );
                                           const modal =
                                             document.getElementById(
                                               "menuModal",
@@ -6209,32 +6254,62 @@
                                             document.querySelector(
                                               ".menu-close",
                                             );
+                                          const menuSection =
+                                            document.getElementById(
+                                              "drinksmenu",
+                                            );
+
+                                          function openMenuModal() {
+                                            modal.classList.add("open");
+                                            document.body.style.overflow =
+                                              "hidden";
+                                          }
+
+                                          function closeMenuModal() {
+                                            modal.classList.remove("open");
+                                            document.body.style.overflow = "";
+                                          }
 
                                           openBtn.addEventListener(
                                             "click",
-                                            () => {
-                                              modal.style.display = "block";
-                                              document.body.style.overflow =
-                                                "hidden";
+                                            openMenuModal,
+                                          );
+
+                                          scrollAndOpenBtn.addEventListener(
+                                            "click",
+                                            function (e) {
+                                              e.preventDefault();
+
+                                              menuSection.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "start",
+                                              });
+
+                                              setTimeout(openMenuModal, 500); // tweak if you want earlier/later
                                             },
                                           );
 
                                           closeBtn.addEventListener(
                                             "click",
-                                            () => {
-                                              modal.style.display = "none";
-                                              document.body.style.overflow = "";
-                                            },
+                                            closeMenuModal,
                                           );
 
                                           window.addEventListener(
                                             "click",
                                             (e) => {
-                                              if (e.target === modal) {
-                                                modal.style.display = "none";
-                                                document.body.style.overflow =
-                                                  "";
-                                              }
+                                              if (e.target === modal)
+                                                closeMenuModal();
+                                            },
+                                          );
+
+                                          window.addEventListener(
+                                            "keydown",
+                                            (e) => {
+                                              if (
+                                                e.key === "Escape" &&
+                                                modal.classList.contains("open")
+                                              )
+                                                closeMenuModal();
                                             },
                                           );
                                         </script>
@@ -6247,6 +6322,216 @@
                           </div>
                         </div>
                       </div>
+
+                      <style>
+                        .hookahsection {
+                          padding: 80px;
+                        }
+                        @media screen and (max-width: 750px) {
+                          .hookahsection {
+                            padding: 40px;
+                          }
+                        }
+                      </style>
+
+                      <div class="edgtf-full-width">
+                        <div class="edgtf-full-width-inner">
+                          <div class="edgtf-grid-row">
+                            <div
+                              class="edgtf-page-content-holder edgtf-grid-col-12"
+                            >
+                              <div class="wpb-content-wrapper">
+                                <div
+                                  class="edgtf-row-grid-section-wrapper"
+                                  style="background-color: #ffffff"
+                                >
+                                  <div
+                                    class="edgtf-row-grid-section hookahsection"
+                                  >
+                                    <div
+                                      class="vc_row wpb_row vc_row-fluid vc_custom_1520509369245 vc_row-o-content-middle vc_row-flex"
+                                    >
+                                      <div
+                                        class="wpb_column vc_column_container vc_col-sm-12"
+                                      >
+                                        <div class="vc_column-inner">
+                                          <div class="wpb_wrapper">
+                                            <div
+                                              class="edgtf-item-showcase-holder clearfix"
+                                            >
+                                              <var class="edgtf-st-tagline"
+                                                >Experience the Flavours</var
+                                              >
+                                              <h2
+                                                class="edgtf-st-title"
+                                                style="
+                                                  color: black;
+                                                  margin-bottom: 60px;
+                                                "
+                                              >
+                                                Signature Hookah Collection<span
+                                                  class="edgtf-st-title-dot"
+                                                  >.</span
+                                                >
+                                              </h2>
+                                              <div
+                                                class="edgtf-is-item edgtf-is-left"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >Love 66</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Sweet, fruity, and smooth, a
+                                                    crowd favourite
+                                                  </p>
+                                                </div>
+                                              </div>
+
+                                              <div
+                                                class="edgtf-is-item edgtf-is-right"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >Double Apple</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Classic, bold apple note
+                                                    with a traditional vibe.
+                                                  </p>
+                                                </div>
+                                              </div>
+
+                                              <div
+                                                class="edgtf-is-item edgtf-is-left"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >Grape Mint</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Fresh mint finish with a
+                                                    sweet grape base
+                                                  </p>
+                                                </div>
+                                              </div>
+
+                                              <div
+                                                class="edgtf-is-item edgtf-is-right"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >African Queen</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Exotic fruit blend, rich and
+                                                    aromatic
+                                                  </p>
+                                                </div>
+                                              </div>
+
+                                              <div
+                                                class="edgtf-is-item edgtf-is-left"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >Blue Eyes (Blueberry)</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Juicy blueberry taste with a
+                                                    mellow smoke
+                                                  </p>
+                                                </div>
+                                              </div>
+
+                                              <div
+                                                class="edgtf-is-item edgtf-is-right"
+                                              >
+                                                <div class="edgtf-is-content">
+                                                  <h5
+                                                    class="edgtf-is-title"
+                                                    style="color: #000000"
+                                                  >
+                                                    <a target="_self"
+                                                      >Sommer in Beirut</a
+                                                    >
+                                                  </h5>
+                                                  <p
+                                                    class="edgtf-is-text"
+                                                    style="color: #757575"
+                                                  >
+                                                    Bright, citrusy notes,
+                                                    perfect for summer nights
+                                                  </p>
+                                                </div>
+                                              </div>
+                                              <!-- CENTER MAIN IMAGE (KEEP THIS) -->
+                                              <div
+                                                class="edgtf-is-image"
+                                                style="margin-top: -17px"
+                                              >
+                                                <img
+                                                  loading="lazy"
+                                                  decoding="async"
+                                                  src="custom/hookah.jpg"
+                                                  alt="Hookah"
+                                                  width="200"
+                                                  height="520"
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <div
                         class="vc_row wpb_row vc_row-fluid vc_custom_1523350595066 vc_row-o-full-height vc_row-o-columns-top vc_row-flex"
                         style="
@@ -6605,7 +6890,8 @@
                         <div class="edgtf-opening-hours-line"></div>
                         <div
                           class="edgtf-opening-hours-time"
-                                                  style="color: white">
+                          style="color: white"
+                        >
                           17 bis 01 Uhr
                         </div>
                       </div>
@@ -6698,60 +6984,68 @@
                       3: "Mittwoch",
                       4: "Donnerstag",
                       5: "Freitag",
-                      6: "Samstag"
+                      6: "Samstag",
                     };
 
                     const todayName = daysMap[todayIndex];
 
-                    document.querySelectorAll(".edgtf-opening-hours-widget").forEach(widget => {
-                      const dayEl = widget.querySelector(".edgtf-opening-hours-day");
-                      const timeEl = widget.querySelector(".edgtf-opening-hours-time");
+                    document
+                      .querySelectorAll(".edgtf-opening-hours-widget")
+                      .forEach((widget) => {
+                        const dayEl = widget.querySelector(
+                          ".edgtf-opening-hours-day",
+                        );
+                        const timeEl = widget.querySelector(
+                          ".edgtf-opening-hours-time",
+                        );
 
-                      if (!dayEl || !timeEl) return;
+                        if (!dayEl || !timeEl) return;
 
-                      const dayText = dayEl.textContent.trim();
+                        const dayText = dayEl.textContent.trim();
 
-                      let isToday = false;
+                        let isToday = false;
 
-                      // Case 1: Range (e.g. Montag - Donnerstag)
-                      if (dayText.includes("-")) {
-                        const [start, end] = dayText.split("-").map(d => d.trim());
+                        // Case 1: Range (e.g. Montag - Donnerstag)
+                        if (dayText.includes("-")) {
+                          const [start, end] = dayText
+                            .split("-")
+                            .map((d) => d.trim());
 
-                        const order = [
-                          "Montag",
-                          "Dienstag",
-                          "Mittwoch",
-                          "Donnerstag",
-                          "Freitag",
-                          "Samstag",
-                          "Sonntag"
-                        ];
+                          const order = [
+                            "Montag",
+                            "Dienstag",
+                            "Mittwoch",
+                            "Donnerstag",
+                            "Freitag",
+                            "Samstag",
+                            "Sonntag",
+                          ];
 
-                        const startIndex = order.indexOf(start);
-                        const endIndex = order.indexOf(end);
-                        const todayOrderIndex = order.indexOf(todayName);
+                          const startIndex = order.indexOf(start);
+                          const endIndex = order.indexOf(end);
+                          const todayOrderIndex = order.indexOf(todayName);
 
-                        if (
-                          startIndex !== -1 &&
-                          endIndex !== -1 &&
-                          todayOrderIndex >= startIndex &&
-                          todayOrderIndex <= endIndex
-                        ) {
+                          if (
+                            startIndex !== -1 &&
+                            endIndex !== -1 &&
+                            todayOrderIndex >= startIndex &&
+                            todayOrderIndex <= endIndex
+                          ) {
+                            isToday = true;
+                          }
+                        }
+                        // Case 2: Single day
+                        else if (dayText === todayName) {
                           isToday = true;
                         }
-                      }
-                      // Case 2: Single day
-                      else if (dayText === todayName) {
-                        isToday = true;
-                      }
 
-                      // Highlight
-                      if (isToday) {
-                        timeEl.style.fontWeight = "700";
-                        timeEl.style.color = "#9929ea"; // highlight color
-                        dayEl.style.fontWeight = "600";
-                      }
-                    });
+                        // Highlight
+                        if (isToday) {
+                          timeEl.style.fontWeight = "700";
+                          timeEl.style.color = "#9929ea"; // highlight color
+                          dayEl.style.fontWeight = "600";
+                        }
+                      });
                   });
                 </script>
                 <style>
