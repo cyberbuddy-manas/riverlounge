@@ -2061,10 +2061,7 @@
     .offbeat-pli-content {
     width: calc(100% - 70px);
   }
-  .offbeat-pricing-list
-    .offbeat-pricing-list-item
-    .offbeat-pli-content
-    .offbeat-pli-bottom-content {
+  .offbeat-pricing-list .offbeat-pricing-list-item .offbeat-pli-content {
     display: none;
   }
 }
