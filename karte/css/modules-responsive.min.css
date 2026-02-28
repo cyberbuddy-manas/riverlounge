@@ -2061,12 +2061,12 @@
     .offbeat-pli-content {
     width: calc(100% - 70px);
   }
-  .offbeat-pricing-list
+  /* .offbeat-pricing-list
     .offbeat-pricing-list-item
     .offbeat-pli-content
     .offbeat-pli-bottom-content {
     display: none;
-  }
+  } */
 }
 @media only screen and (max-width: 480px) {
   .offbeat-pricing-list .offbeat-pli-image-holder {
