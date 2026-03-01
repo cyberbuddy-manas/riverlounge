@@ -4435,13 +4435,13 @@
           </form>
         </header> -->
 
-        <a id="edgtf-back-to-top" href="#">
+        <!-- <a id="edgtf-back-to-top" href="#">
           <script src="./wa-elfsight.js"></script>
           <div
             class="elfsight-app-51bb44f2-c348-4ea1-8643-5d330575f44d"
             data-elfsight-app-lazy
           ></div>
-        </a>
+        </a> -->
 
         <div class="edgtf-content" style="margin-top: -98px">
           <div class="edgtf-content-inner">
@@ -8124,3 +8124,365 @@
     </script>
   </body>
 </html>
+
+<style>
+  #wa-btn {
+    position: fixed;
+    bottom: 20px;
+    z-index: 9999;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      filter 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+  #wa-btn::before {
+    z-index: 0;
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: 999px;
+    opacity: 0;
+    background: radial-gradient(
+      circle,
+      rgba(37, 211, 102, 0.35) 0%,
+      rgba(37, 211, 102, 0) 60%
+    );
+    filter: blur(1px);
+    animation: waPulse 2.2s ease-out infinite;
+  }
+  #wa-btn::after {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  #wa-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    filter: saturate(1.05);
+  }
+  #wa-btn img {
+    width: 56%;
+    height: auto;
+    display: block;
+  }
+
+  @keyframes waPulse {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    15% {
+      opacity: 0.85;
+    }
+    70% {
+      opacity: 0;
+      transform: scale(1.18);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+  }
+
+  #wa-box {
+    position: fixed;
+    width: 320px;
+    bottom: 92px;
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+    font-size: 14px;
+    transform: translateY(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    backdrop-filter: blur(14px);
+    z-index: 9999;
+  }
+  #wa-box.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #wa-header {
+    color: white;
+    padding: 14px 14px 12px;
+    font-weight: 650;
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(37, 211, 102, 1),
+      rgba(16, 185, 129, 1)
+    );
+  }
+
+  #wa-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  #wa-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+  #wa-titlewrap {
+    line-height: 1.1;
+  }
+  #wa-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  #wa-sub {
+    font-size: 12px;
+    font-weight: 450;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  #wa-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #bbf7d0;
+    box-shadow: 0 0 0 3px rgba(187, 247, 208, 0.25);
+  }
+
+  #wa-close {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  #wa-close:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.24);
+  }
+
+  #wa-body {
+    padding: 14px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.7)
+    );
+  }
+  #wa-bubble {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: 16px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    color: #0b3b2a;
+    font-size: 13px;
+  }
+  #wa-body textarea {
+    width: 100%;
+    height: 78px;
+    border-radius: 14px;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    padding: 10px 12px;
+    resize: none;
+    font-family: inherit;
+    outline: none;
+    background: rgba(255, 255, 255, 0.9);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  #wa-body textarea:focus {
+    border-color: rgba(16, 185, 129, 0.55);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+  }
+  #wa-send {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px 12px;
+    border-radius: 14px;
+    border: none;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    transition:
+      transform 0.15s ease,
+      filter 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  #wa-send:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.05);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+  }
+  #wa-send:active {
+    transform: translateY(0px) scale(0.99);
+  }
+
+  /* Mobile fit */
+  @media (max-width: 420px) {
+    #wa-box {
+      width: calc(100vw - 24px);
+      left: 12px !important;
+      right: 12px !important;
+    }
+    #wa-btn {
+      left: auto !important;
+      right: 16px !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const WA_CONFIG = {
+      phone: "491628888894",
+      buttonColor: "#9929ea",
+      headerColor: "#9929ea",
+      sendColor: "#9929ea",
+      buttonSize: "60",
+      position: "right",
+      title: "River Lounge",
+      subtitle: "Online",
+      defaultMessage: "Hallo",
+    };
+    const side = WA_CONFIG.position === "left" ? "left:20px" : "right:20px";
+    const WA_SVG = `<svg viewBox="0 0 448 512" width="58%" height="58%" aria-hidden="true" focusable="false" style="display:block;position:relative;z-index:2">
+            <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.2-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 185-190.6 185zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.6-11.1-9.3-9.6-12.5-9.8-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.5 19-19.5 46.3 0 27.3 20 53.7 22.8 57.4 2.8 3.7 39.4 60.1 95.4 84.2 13.3 5.7 23.7 9.1 31.8 11.6 13.4 4.3 25.6 3.7 35.2 2.3 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.3-5-3.7-10.5-6.5z"/>
+          </svg>`;
+
+    const html = `
+              <button id="wa-btn" style="${side}; width:${WA_CONFIG.buttonSize}px; height:${WA_CONFIG.buttonSize}px; background:${WA_CONFIG.buttonColor};" aria-label="Open WhatsApp chat">
+                ${WA_SVG}
+              </button>
+
+              <div id="wa-box" style="${side}">
+                <div id="wa-header" style="background:linear-gradient(135deg, ${WA_CONFIG.headerColor}, ${WA_CONFIG.headerColor})">
+                  <div id="wa-top">
+                    <div id="wa-avatar">💬</div>
+                    <div id="wa-titlewrap">
+                      <div id="wa-title">${WA_CONFIG.title}</div>
+                      <div id="wa-sub"><span id="wa-dot"></span>${WA_CONFIG.subtitle}</div>
+                    </div>
+                  </div>
+                  <span id="wa-close" aria-label="Close">✕</span>
+                </div>
+
+                <div id="wa-body">
+                  <div id="wa-bubble">Lust auf einen Tisch? Just drop a “Hi”.</div>
+                  <textarea id="wa-msg" placeholder="Type your message...">${WA_CONFIG.defaultMessage}</textarea>
+                  <button id="wa-send" style="background:${WA_CONFIG.sendColor}"><span style="font-size:16px">➤</span> Send via WhatsApp</button>
+                </div>
+              </div>
+            `;
+
+    document.body.insertAdjacentHTML("beforeend", html);
+
+    const btn = document.getElementById("wa-btn");
+    const box = document.getElementById("wa-box");
+
+    // Icon color by contrast (prefer white unless very light background)
+    const hexToRgb = (hex) => {
+      const h = String(hex || "#000000")
+        .replace("#", "")
+        .trim();
+      if (h.length !== 6) return { r: 0, g: 0, b: 0 };
+      return {
+        r: parseInt(h.slice(0, 2), 16),
+        g: parseInt(h.slice(2, 4), 16),
+        b: parseInt(h.slice(4, 6), 16),
+      };
+    };
+    const relLum = ({ r, g, b }) => {
+      const srgb = [r, g, b]
+        .map((v) => v / 255)
+        .map((v) =>
+          v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4),
+        );
+      return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+    };
+    const bestIconColor = (bgHex) => {
+      const bgLum = relLum(hexToRgb(bgHex));
+      return bgLum > 0.75 ? "#0b0b0f" : "#ffffff";
+    };
+    btn.style.color = bestIconColor(WA_CONFIG.buttonColor);
+
+    // Pulse color matches buttonColor
+    const { r, g, b } = hexToRgb(WA_CONFIG.buttonColor || "#25d366");
+    const pulseStyle = document.createElement("style");
+    pulseStyle.textContent = `#wa-btn::before{background:radial-gradient(circle, rgba(${r},${g},${b},.35) 0%, rgba(${r},${g},${b},0) 60%);}`;
+    document.head.appendChild(pulseStyle);
+
+    const open = () => box.classList.add("open");
+    const close = () => box.classList.remove("open");
+    const toggle = () => (box.classList.contains("open") ? close() : open());
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+    document.getElementById("wa-close").addEventListener("click", (e) => {
+      e.stopPropagation();
+      close();
+    });
+
+    document.addEventListener("click", () => close());
+    box.addEventListener("click", (e) => e.stopPropagation());
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+
+    document.getElementById("wa-send").addEventListener("click", () => {
+      const msg = encodeURIComponent(document.getElementById("wa-msg").value);
+      window.open(
+        "https://wa.me/" + WA_CONFIG.phone + "?text=" + msg,
+        "_blank",
+      );
+    });
+  })();
+</script>
